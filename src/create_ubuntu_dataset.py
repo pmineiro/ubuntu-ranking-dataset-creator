@@ -351,6 +351,9 @@ if __name__ == '__main__':
             w.writerow(translated_row)
         print("Train dataset stored in: {}".format(args.output))
 
+    def megatrain_cmd(args):
+        create_eval_dataset(args, "trainfiles.csv")
+
     def valid_cmd(args):
         create_eval_dataset(args, "valfiles.csv")
 
@@ -389,6 +392,10 @@ if __name__ == '__main__':
     parser_train.add_argument('-p', type=float, default=0.5, help='positive example probability')
     parser_train.add_argument('-e', '--examples', type=int, default=1000000, help='number of examples to generate')
     parser_train.set_defaults(func=train_cmd)
+
+    parser_megatrain = subparsers.add_parser('megatrain', help='megatrainset generator')
+    parser_megatrain.add_argument('-n', type=int, default=9, help='number of distractor examples for each context')
+    parser_megatrain.set_defaults(func=megatrain_cmd)
 
     parser_test = subparsers.add_parser('test', help='testset generator')
     parser_test.add_argument('-n', type=int, default=9, help='number of distractor examples for each context')
